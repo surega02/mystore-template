@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+/* Design tokens rebuilt from the Shopify "Concept" theme :root block
+   (assets are in template/concept — tokens live here now). */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Palette (RGB triplets from the source -> hex) */
+  --color-foreground: #171717;
+  --color-background: #ffffff;
+  --color-highlight: #ffddbf;
+  --color-shadow: #a8e8e2;
+  --color-brand: #1f1f1f;
+  --color-cream: #fafafa;
+  --color-sale: #e11d48;
+  --color-rating: #f59e0b;
+  --color-terracotta: #e0a580;
+  --color-lemon: #fde68a;
+  --color-star: #fcd34d;
+  --color-success: #4d7c0f;
+  --color-success-bg: #f7fee7;
+  --color-error: #be123c;
+  --color-error-bg: #fff1f2;
+  --color-info: #b45309;
+  --color-info-bg: #fffbeb;
+
+  /* Extra text sizes from the theme scale */
+  --text-3xs: 0.625rem;
+  --text-2xs: 0.6875rem;
+  --text-2sm: 0.8125rem;
+
+  /* Fluid headline scale (title-*) */
+  --text-title-sm: clamp(1.5rem, 1.19rem + 1vw, 2rem);
+  --text-title-md: clamp(2rem, 1.38rem + 1.9vw, 3.5rem);
+  --text-title-lg: clamp(2.5rem, 1.75rem + 2.5vw, 4.5rem);
+  --text-title-xl: clamp(3rem, 2rem + 3.2vw, 6rem);
+
+  --tracking-heading: -0.03em;
+
+  /* Custom spacing units not in Tailwind's default scale */
+  --spacing-0d5: 0.125rem;
+  --spacing-1d5: 0.375rem;
+  --spacing-2d5: 0.625rem;
+  --spacing-3d5: 0.875rem;
+  --spacing-4d5: 1.125rem;
+  --spacing-5d5: 1.375rem;
+  --spacing-6d5: 1.625rem;
+  --spacing-7d5: 1.875rem;
+  --spacing-8d5: 2.125rem;
+  --spacing-9d5: 2.375rem;
+  --spacing-10d5: 2.625rem;
+  --spacing-13: 3.25rem;
+  --spacing-15: 3.875rem;
+  --spacing-18: 4.5rem;
+  --spacing-23: 5.625rem;
+  --spacing-100: 32rem;
+}
+
+@layer base {
+  :root {
+    --page-width: 1900px;
+    --page-padding: clamp(1.25rem, 0.5rem + 2.5vw, 3rem);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  ::selection {
+    background: var(--color-foreground);
+    color: var(--color-background);
+  }
+}
+
+@layer components {
+  /* Centered, padded theme container */
+  .page-width {
+    max-width: var(--page-width);
+    margin-inline: auto;
+    padding-inline: var(--page-padding);
+  }
+
+  .heading {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: var(--tracking-heading);
+    line-height: 1;
+  }
+
+  /* Pill buttons — primary (dark fill) & secondary (outlined) */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+  }
+
+  .btn--primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition-all duration-300 text-background bg-foreground px-7 py-3 text-sm hover:opacity-90;
+  }
+
+  .btn--secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition-all duration-300 border-2 border-foreground bg-transparent px-7 py-2.5 text-sm text-foreground hover:bg-foreground hover:text-background;
+  }
+
+  .btn--white {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition-all duration-300 bg-background px-7 py-3 text-sm text-foreground hover:opacity-90;
+  }
+
+  .btn--small {
+    @apply px-5 py-2 text-xs;
+  }
+
+  /* Form fields with floating labels (is-floating) */
+  .field {
+    @apply relative;
+  }
+
+  .field input:not([type="checkbox"]),
+  .field select,
+  .field textarea {
+    @apply w-full rounded-md bg-cream px-4 pt-6 pb-2 text-sm border-0 outline-none placeholder-transparent focus:ring-2 focus:ring-foreground;
+  }
+
+  .field label {
+    @apply absolute left-4 top-1/2 -translate-y-1/2 text-sm text-foreground/60 transition-all pointer-events-none;
+  }
+
+  .field input:focus ~ label,
+  .field input:not(:placeholder-shown) ~ label,
+  .field textarea:focus ~ label,
+  .field textarea:not(:placeholder-shown) ~ label,
+  .field.select-filled ~ label {
+    @apply top-3 text-xs -translate-y-0;
+  }
+}
+
+/* Marquee used by the scrolling-text sections */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--marquee-speed, 40s) linear infinite;
+}
